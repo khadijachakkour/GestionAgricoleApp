@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+        .container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .form-wrapper {
+            width: 600px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+        }
+        .image-section {
+            background-color: #1e995b;
+            padding: 30px;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-image: url('profill.jpeg');
+            background-size: cover;
+            background-position: center;
+            margin-bottom: 10px;
+        }
+        .profile-title {
+            font-size: 30px;
+            font-weight: bold;
+            text-align: center;
+            font-family: 'Helvetica';
+        }
+        .profile-section {
+            padding: 30px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #1e995b;
+        }
+        .form-group label {
+            font-weight: bold;
+            color: #1e995b;
+        }
+        .form-group span {
+            color: #1e995b;
+        }
+        .navbar {
+            background-color: #ffffff;
+            width: 100%;
+        }
+        .navbar .navbar-brand {
+            color: #1e995b;
+            font-size: 1.5rem;
+            padding: 15px;
+            transition: color 0.3s ease;
+        }
+        .navbar .navbar-brand:hover {
+            color: #ffffff;
+        }
+        .navbar .nav-link {
+            color: #1e995b;
+            font-size: 1.2rem;
+            padding: 10px 15px;
+            transition: background-color 0.3s ease;
+        }
+        .navbar .nav-link:hover {
+            background-color: #1e995b;
+            color: #ffffff;
+        }
+        .navbar .active {
+            background-color: #1e995b;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/MenuT"><i class="fas fa-home"></i> Accueil</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/ProfileTech"><i class="fas fa-user"></i> Profil</a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="/capteurT"><i class="fas fa-microchip"></i> Capteurs</a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="/Tafficher"><i class="fas fa-crop-alt"></i> Consulter votre Champs</a>
+        </li>
+        
+    
+        <li class="nav-item">
+        <a class="nav-link" href="/MaladieT"><i class="fas fa-seedling"></i> Maladies des cultures</a>
+          </li>
+        
+        <li class="nav-item">
+       <a class="nav-link" href="/ModifierProfil"><i class="fas fa-cog"></i> Paramètres</a>
+       </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/Home"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+        </li>
+      </ul>
+      </div>
+  </nav>
+<div class="container">
+    <div class="form-wrapper">
+        <div class="row">
+            <div class="col-md-4 image-section">
+                <div class="profile-image"></div>
+                <div class="profile-title">Technicien</div>
+            </div>
+            <div class="col-md-8 profile-section">
+                <h1 class="mb-4">Profile</h1>
+                <div class="form-group">
+                    <label for="nom">Nom:</label>
+                    <span th:text="${nom}" class="d-block"></span>
+                </div>
+                <div class="form-group">
+                    <label for="prenom">Prénom:</label>
+                    <span th:text="${prenom}" class="d-block"></span>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <span th:text="${email}" class="d-block"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

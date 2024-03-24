@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Affichage des données des capteurs</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            padding-top: 0; 
+        }
+
+        .navbar {
+            background-color: #ffffff;
+            width: 100%;
+            margin-bottom: 0; 
+        }
+        .navbar .navbar-brand {
+            color: #1e995b;
+            font-size: 1.5rem;
+            padding: 15px;
+            transition: color 0.3s ease;
+        }
+        .navbar .navbar-brand:hover {
+            color: #ffffff;
+        }
+        .navbar .nav-link {
+            color: #1e995b;
+            font-size: 1.2rem;
+            padding: 10px 15px;
+            transition: background-color 0.3s ease;
+        }
+        .navbar .nav-link:hover {
+            background-color: #1e995b;
+            color: #ffffff;
+        }
+        .navbar .active {
+            background-color: #1e995b;
+            color: #ffffff;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .alert {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/Menu" onmouseover="highlightMenuItem(this)" onmouseout="removeHighlight(this)" onclick="highlightMenuItem(this)"><i class="fas fa-home"></i> Accueil</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/Profile" onmouseover="highlightMenuItem(this)" onmouseout="removeHighlight(this)" onclick="highlightMenuItem(this)"><i class="fas fa-user"></i> Profil</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/Techniciens.html" onmouseover="highlightMenuItem(this)" onmouseout="removeHighlight(this)" onclick="highlightMenuItem(this)"><i class="fas fa-users"></i> Techniciens</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/capteur" onmouseover="highlightMenuItem(this)" onmouseout="removeHighlight(this)" onclick="highlightMenuItem(this)"><i class="fas fa-microchip"></i> Capteurs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/afficher" onmouseover="highlightMenuItem(this)" onmouseout="removeHighlight(this)" onclick="highlightMenuItem(this)"><i class="fas fa-crop-alt"></i> Gerer votre Champs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/MaladieIng" onmouseover="highlightMenuItem(this)" onmouseout="removeHighlight(this)" onclick="highlightMenuItem(this)"><i class="fas fa-seedling"></i> Maladies des cultures</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/afficherRapport.html" onmouseover="highlightMenuItem(this)" onmouseout="removeHighlight(this)" onclick="highlightMenuItem(this)"><i class="fas fa-file-alt"></i> Gerer rapport</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/Home" onmouseover="highlightMenuItem(this)" onmouseout="removeHighlight(this)" onclick="highlightMenuItem(this)"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="content">
+    <div id="chart" th:attr="data-temperatures=${temperatures}, data-humidities=${humidities}"></div>
+
+    <div id="alertContainer"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    var chartElement = document.getElementById('chart');
+    var temperatures = JSON.parse(chartElement.getAttribute('data-temperatures'));
+    var humidities = JSON.parse(chartElement.getAttribute('data-humidities'));
+
+    var temperatureThreshold = 27; // Valeur seuil de température
+    var humidityThreshold = 55; // Valeur seuil d'humidité
+
+    // Créer les traces de données
+    var temperatureTrace = {
+        x: ['8:00', '10:00', '12:00', '14:00', '16:00','18:00'],
+        y: temperatures,
+        mode: 'lines',
+        name: 'Température (°C)',
+        line: {
+            color: 'red'
+        }
+    };
+
+    var humidityTrace = {
+        x: ['8:00', '10:00', '12:00', '14:00', '16:00','18:00'],
+        y: humidities,
+        mode: 'lines',
+        name: 'Humidité (%)',
+        line: {
+            color: 'blue'
+        }
+    };
+
+    // Créer la configuration du graphique
+    var layout = {
+        title: 'Graphique de température et d\'humidité',
+        xaxis: {
+            title: 'Heure'
+        },
+        yaxis: {
+            title: 'Valeur'
+        }
+    };
+
+    // Créer les données du graphique
+    var data = [temperatureTrace, humidityTrace];
+
+    // Vérifier la condition de dépassement de la température seuil
+    if (Math.max(...temperatures) > temperatureThreshold) {
+
+        // Créer le bouton d'alerte
+        var alertButton = document.createElement('button');
+        alertButton.setAttribute('class', 'btn btn-danger');
+        alertButton.innerHTML = 'Température élevée! Cliquez ici pour activer Ventilateur';
+        alertButton.addEventListener('click', function() {
+            // Rediriger vers la page d'alerte
+            window.location.href = '/Ventilateur';
+        });
+
+        // Ajouter le bouton à la page
+        document.getElementById('alertContainer').appendChild(alertButton);
+    }
+
+    // Afficher le graphique
+    Plotly.newPlot('chart', data, layout);
+</script>
+</body>
+</html>

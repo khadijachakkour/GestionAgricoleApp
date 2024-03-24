@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <title>Recherche de maladies par culture</title>
+  <style>
+    h1 {
+      color: black;
+    }
+
+    .navbar {
+            background-color: #ffffff;
+            width: 100%;
+        }
+        .navbar .navbar-brand {
+            color: #1e995b;
+            font-size: 1.5rem;
+            padding: 15px;
+            transition: color 0.3s ease;
+        }
+        .navbar .navbar-brand:hover {
+            color: #ffffff;
+        }
+        .navbar .nav-link {
+            color: #1e995b;
+            font-size: 1.2rem;
+            padding: 10px 15px;
+            transition: background-color 0.3s ease;
+        }
+        .navbar .nav-link:hover {
+            background-color: #1e995b;
+            color: #ffffff;
+        }
+        .navbar .active {
+            background-color: #1e995b;
+            color: #ffffff;
+        }
+    
+ body {
+      font-family: Arial, sans-serif;
+      background-color: #ffffff;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: black;
+    }
+
+    form {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #1e995b;
+      font-weight: bold;
+    }
+
+    input[type="text"] {
+      width: 300px;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      font-size: 14px;
+    }
+
+    button[type="submit"] {
+      padding: 5px 10px;
+      background-color: #1e995b;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    #resultsContainer {
+      margin-bottom: 20px;
+    }
+
+    .maladie {
+      margin-bottom: 10px;
+      padding: 10px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      color: #4CAF50;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .maladie:hover {
+      background-color: #4CAF50;
+      color: #fff;
+    }
+
+    .details {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      color: black;
+    }
+
+    .details h2 {
+      margin-top: 0;
+    }
+
+    .details img {
+      max-width: 100%;
+      margin-bottom: 10px;
+    }
+
+    
+     .active,
+        .nav-link:hover {
+            background-color: #1e995b ;
+            color: #ffffff ;
+        }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/Menu" onmouseover="highlightMenuItem(this)" onmouseout="removeHighlight(this)" onclick="highlightMenuItem(this)"><i class="fas fa-home"></i> Accueil</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/Profile" onmouseover="highlightMenuItem(this)" onmouseout="removeHighlight(this)" onclick="highlightMenuItem(this)"><i class="fas fa-user"></i> Profil</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/Techniciens.html" onmouseover="highlightMenuItem(this)" onmouseout="removeHighlight(this)" onclick="highlightMenuItem(this)"><i class="fas fa-users"></i> Techniciens</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/capteur" onmouseover="highlightMenuItem(this)" onmouseout="removeHighlight(this)" onclick="highlightMenuItem(this)"><i class="fas fa-microchip"></i> Capteurs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/afficher" onmouseover="highlightMenuItem(this)" onmouseout="removeHighlight(this)" onclick="highlightMenuItem(this)"><i class="fas fa-crop-alt"></i> Gerer votre Champs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/MaladieIng" onmouseover="highlightMenuItem(this)" onmouseout="removeHighlight(this)" onclick="highlightMenuItem(this)"><i class="fas fa-seedling"></i> Maladies des cultures</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/afficherRapport.html" onmouseover="highlightMenuItem(this)" onmouseout="removeHighlight(this)" onclick="highlightMenuItem(this)"><i class="fas fa-file-alt"></i> Gerer rapport</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/Home" onmouseover="highlightMenuItem(this)" onmouseout="removeHighlight(this)" onclick="highlightMenuItem(this)"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+  <h1 class="text-center text-dark my-4" style="font-size: 1rem; font-weight: bold;">Faire une recherche pour vous aider à identifier les maladies courantes dont vous souffrez dans votre culture, et les traitements nécessaires à appliquer.</h1>
+
+  <form id="searchForm">
+    <label for="cultureInput">Culture :</label>
+    <input type="text" id="cultureInput" placeholder="Entrez une culture">
+    <button type="submit">Rechercher</button>
+  </form>
+
+  <div id="resultsContainer"></div>
+
+  <div id="detailsContainer"></div>
+
+  <p id="noResultsMessage"></p>
+
+   <script>
+    // Données de maladies 
+    var maladies = [
+      {
+        culture: "Tomate",
+        nom: "Mildiou",
+        image: "Maladie/tomateM.jpg",
+        description: "Mildiou (Phytophthora infestans) :Le mildiou est une maladie fongique qui affecte les feuilles, les tiges et les fruits de la tomate. Elle se caractérise par des taches brunâtres sur les feuilles, qui finissent par se nécroser et se dessécher. Les fruits peuvent également présenter des taches sombres et pourrir.",
+        causes:" Les Causes: Le mildiou de la tomate est principalement causé par un champignon appelé Phytophthora infestans. Voici les principales causes de cette maladie :Conditions climatiques favorables : Le mildiou se développe généralement dans des conditions chaudes et humides, avec des températures comprises entre 15 et 25 °C. Une humidité élevée et une présence fréquente de rosée favorisent la propagation de la maladie.Plantes infectées : Le mildiou peut se propager rapidement d'une plante infectée à une autre. Si vous avez des plants de tomates infectés dans votre jardin, les spores du champignon peuvent se propager par le vent, les éclaboussures d'eau ou les insectes, infectant ainsi les autres plantes de tomates.Sol contaminé : Les spores du champignon Phytophthora infestans peuvent survivre dans le sol pendant plusieurs années. Si vous plantez des tomates dans un sol contaminé, il y a un risque élevé d'infection par le mildiou.Manque de circulation d'air : Une mauvaise circulation de l'air autour des plantes de tomates peut créer un environnement propice à l'apparition du mildiou. Les plantes qui sont trop proches les unes des autres ou qui sont cultivées dans des zones à faible ventilation sont plus susceptibles d'être touchées.Variétés sensibles : Certaines variétés de tomates sont plus sensibles au mildiou que d'autres. Il est important de choisir des variétés résistantes lorsque vous plantez des tomates pour réduire les risques d'infection.Mauvaise gestion de l'irrigation : Un arrosage excessif ou une irrigation mal gérée, en particulier par le haut, peut créer des conditions favorables à la propagation du mildiou. L'humidité excessive sur les feuilles et les fruits favorise la germination des spores du champignon.",
+        symptome: "Les Symptomes :Taches foncées sur les feuilles Les premiers signes apparaissent souvent sur les feuilles inférieures, avec l'apparition de petites taches foncées. Ces taches se développent ensuite en lésions plus grandes de couleur brun-olive Décoloration des feuilles Les feuilles touchées peuvent présenter une décoloration jaunâtre entre les taches foncées et les tiges peuvent également montrer des signes de flétrissement,Pourriture des fruits Les fruits peuvent également être affectés par le mildiou. Des taches brunâtres et déprimées apparaissent généralement à la base du fruit, ce qui entraîne une pourriture et une détérioration rapide,Flétrissement des plantes En cas d'infection grave, les plantes de tomates peuvent se flétrir et mourir rapidement.",
+        traitement: "Les Traitements :Pour traiter le mildiou sur les plants de tomate, il est recommandé de : -Évitez de planter des tomates dans les mêmes zones du jardin pendant plusieurs années consécutives pour réduire la propagation des spores du mildiou - Assurez-vous de fournir un espacement adéquat entre les plants de tomates pour favoriser une bonne circulation de l'air et réduire l'humidité.-Évitez d'arroser les plantes par le haut pour éviter que les feuilles ne restent humides pendant de longues périodes. Utilisez plutôt un système d'irrigation au sol .L'utilisation de fongicides spécifiques pour lutter contre le mildiou peut être nécessaire dans les cas graves.Consultez un professionnel de l'horticulture pour connaître les produits et les méthodes appropriés.",
+      },
+      {
+        culture: "Tomate",
+        nom: "Pourriture apicale (Blossom-end rot)",
+        image: "Maladie/tomate.jpg",
+        description: "La pourriture apicale est un trouble physiologique qui se manifeste par des taches brunâtres et déprimées à l'extrémité inférieure des fruits de la tomate. Cela est souvent dû à une carence en calcium dans le sol ou à des fluctuations importantes de l'humidité.",
+        causes:" Les principales causes de la pourriture apicale :Carence en calcium : La principale cause de la pourriture apicale est une carence en calcium dans les tissus de la tomate. Le calcium est essentiel pour le développement cellulaire et la formation de parois cellulaires solides. Lorsqu'il y a un manque de calcium disponible pour les fruits en croissance, cela peut entraîner la dégradation des cellules à l'extrémité inférieure du fruit, provoquant ainsi la pourriture apicale.-Déséquilibre hydrique : Les fluctuations importantes de l'humidité du sol peuvent affecter l'absorption et la distribution du calcium dans la plante. Un arrosage excessif ou des périodes de sécheresse prolongées peuvent perturber l'équilibre hydrique de la tomate, entraînant une mauvaise absorption du calcium.-pH du sol inapproprié : Un pH du sol déséquilibré peut également affecter la disponibilité du calcium pour la plante. Un pH trop élevé ou trop bas peut entraîner des problèmes d'absorption du calcium par les racines.-Stress thermique : Des températures extrêmes, notamment des périodes de chaleur intense, peuvent augmenter le risque de pourriture apicale. Les températures élevées peuvent perturber la capacité de la plante à absorber et à transporter le calcium.-Pratiques culturales inadéquates : Une fertilisation déséquilibrée ou excessive, en particulier avec des engrais riches en azote, peut influencer l'absorption du calcium. De plus, des tailles excessives ou des blessures aux racines peuvent également perturber le système racinaire et affecter l'absorption des nutriments, y compris le calcium.",
+        symptome: "Les Symptomes :- Tache brune à noire à l'extrémité inférieure du fruit : La pourriture apicale commence généralement par une tache brunâtre ou noire à l'extrémité inférieure du fruit, du côté opposé à la tige. La tache peut être petite et discrète au début, mais elle a tendance à s'agrandir à mesure que la condition progresse.- Texture molle et déprimée : La zone touchée par la pourriture apicale a une texture molle et déprimée au toucher. Elle peut s'enfoncer légèrement et paraître friable.- Apparence sèche et parcheminée : La tache peut également prendre une apparence sèche et parcheminée, ce qui lui donne une texture semblable à du cuir.- Pas de signes d'infection fongique ou bactérienne : Contrairement à d'autres maladies qui peuvent affecter les tomates, la pourriture apicale n'est pas causée par un pathogène infectieux. Ainsi, il n'y aura pas de présence de moisissures, de champignons ou de bactéries sur la zone touchée.",
+        traitement: "Le traitement de la pourriture apicale chez les tomates se concentre principalement sur la correction des causes sous-jacentes, en particulier la carence en calcium. Voici quelques mesures que vous pouvez prendre pour traiter la pourriture apicale :- Apport en calcium : Assurez-vous que les plantes de tomates reçoivent suffisamment de calcium. Cela peut être fait en incorporant des sources de calcium dans le sol, telles que de la poudre de coquilles d'œufs broyées ou de la farine d'os. Vous pouvez également utiliser des suppléments de calcium foliaire en les pulvérisant directement sur les plantes.- Irrigation régulière et uniforme : Maintenez un niveau d'humidité constant dans le sol en arrosant régulièrement les plantes de tomates. Évitez les périodes de sécheresse prolongée suivies d'un arrosage excessif, car cela peut perturber l'absorption du calcium.- Équilibrage des nutriments : Assurez-vous d'avoir une fertilisation équilibrée en fournissant aux plantes de tomates les nutriments nécessaires dans les bonnes proportions. Une carence ou un excès de certains nutriments, en particulier l'azote, peut affecter l'absorption du calcium.- Correction du pH du sol : Vérifiez le pH du sol et ajustez-le si nécessaire. Le pH optimal pour une absorption adéquate du calcium est généralement compris entre 6,5 et 7,5. Si le pH du sol est trop élevé ou trop bas, il peut affecter la disponibilité du calcium pour les plantes.- Utilisation de paillis : Appliquez une couche de paillis organique autour des plantes de tomates pour maintenir une température du sol régulière et une humidité constante. Cela peut aider à réduire les fluctuations de l'humidité et à maintenir une croissance saine des fruits.- Variétés résistantes : Choisissez des variétés de tomates réputées pour leur résistance à la pourriture apicale. Bien que cela ne soit pas un traitement direct, cela peut réduire la sensibilité de vos cultures à cette condition.- Surveillance et réaction rapide : Surveillez régulièrement vos plants de tomates pour détecter tout signe précoce de pourriture apicale. Si vous remarquez des symptômes, retirez les fruits touchés pour éviter la propagation de la maladie.",
+
+      },
+      
+      
+      
+     
+    ];
+
+    // Fonction pour afficher les résultats de recherche
+    function afficherResultats(resultats) {
+      var resultsContainer = document.getElementById("resultsContainer");
+      resultsContainer.innerHTML = "";
+
+      if (resultats.length === 0) {
+        resultsContainer.textContent = "Aucun résultat trouvé.";
+      }
+
+      for (var i = 0; i < resultats.length; i++) {
+        var maladie = resultats[i];
+
+        var maladieElement = document.createElement("div");
+        maladieElement.classList.add("maladie");
+        maladieElement.textContent = maladie.nom;
+        maladieElement.addEventListener("click", afficherDetails.bind(null, maladie));
+
+        resultsContainer.appendChild(maladieElement);
+      }
+    }
+
+    // Fonction pour afficher les détails d'une maladie
+    function afficherDetails(maladie) {
+      var detailsContainer = document.getElementById("detailsContainer");
+      detailsContainer.innerHTML = "";
+
+      var detailsElement = document.createElement("div");
+      detailsElement.classList.add("details");
+      
+      var imageElement = document.createElement("img");
+      imageElement.src = maladie.image;
+      imageElement.alt = maladie.nom;
+      detailsElement.appendChild(imageElement);
+
+      var nomElement = document.createElement("h2");
+      nomElement.textContent = maladie.nom;
+      detailsElement.appendChild(nomElement);
+
+      var descriptionElement = document.createElement("p");
+      descriptionElement.textContent = maladie.description;
+      detailsElement.appendChild(descriptionElement);
+
+
+      
+      var causesElement = document.createElement("p");
+      causesElement.textContent = maladie.causes;
+      detailsElement.appendChild(causesElement);
+
+      
+      var symptomeElement = document.createElement("p");
+      symptomeElement.textContent = maladie.symptome;
+      detailsElement.appendChild(symptomeElement);
+
+      
+      var traitementElement = document.createElement("p");
+      traitementElement.textContent = maladie.traitement;
+      detailsElement.appendChild(traitementElement);
+      
+       detailsContainer.appendChild(detailsElement);
+      
+      
+    }
+
+    // Événement de soumission du formulaire
+    document.getElementById("searchForm").addEventListener("submit", function(event) {
+      event.preventDefault();  // pour éviter le rechargement de la page.
+      var cultureInput = document.getElementById("cultureInput").value.toLowerCase();
+      var resultats = maladies.filter(function(maladie) {
+        return maladie.culture.toLowerCase() === cultureInput;
+      });
+      afficherResultats(resultats);
+    });
+  </script>
+  
+  
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+
+<script>
+    function highlightMenuItem(element) {
+        // Supprimer la classe "active" de tous les éléments du menu
+        var menuItems = document.querySelectorAll('.nav-link');
+        menuItems.forEach(function(item) {
+            item.classList.remove('active');
+        });
+
+        // Ajouter la classe "active" à l'élément du menu survolé ou cliqué
+        element.classList.add('active');
+    }
+
+    function removeHighlight(element) {
+        // Supprimer la classe "active" de l'élément du menu lorsque la souris est retirée
+        element.classList.remove('active');
+    }
+</script>
+</body>
+</html>
+ 

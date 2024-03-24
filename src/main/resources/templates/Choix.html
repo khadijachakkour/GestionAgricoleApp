@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #ffffff;
+      font-family: Arial, sans-serif;
+    }
+
+    .menu-item {
+      transition: all 0.3s;
+      background-color: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .menu-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .menu-item img {
+      object-fit: cover;
+      height: 200px;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .menu-item h5 {
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    /* Style personnalisé pour le texte "Ingénieur" */
+    .menu-item.ing h5 {
+      color: #1e995b;
+      text-transform: uppercase;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    /* Style personnalisé pour le texte "Technicien" */
+    .menu-item.tech h5 {
+      color: #1e995b;
+      text-transform: uppercase;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">  
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <hr>
+        <div class="list-group">
+          <a href="/LoginIng.html" class="list-group-item list-group-item-action rounded-0 border-0 menu-item ing">
+            <h5 class="text-center mb-4">Ingénieur</h5>
+            <img src="profil.jpeg" alt="Image 1" class="img-fluid rounded-lg">
+          </a>
+          <a href="/LoginTech" class="list-group-item list-group-item-action rounded-0 border-0 menu-item tech">
+            <h5 class="text-center mb-4">Technicien</h5>
+            <img src="profill.jpeg" alt="Technicien" class="img-fluid rounded-lg">
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

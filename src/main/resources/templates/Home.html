@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Welcome to AgriApp</title>
+<link rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+    
+    <style>
+    .animated-text {
+      animation: moveText 2s infinite;
+      color: green;
+    }
+    
+    .custom-centered-image {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 400px;
+    }
+    
+    @keyframes moveText {
+      0% { transform: translateX(0); }
+      50% { transform: translateX(50px); }
+      100% { transform: translateX(0); }
+    }
+  </style>
+  
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-size: 24px;
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-white">
+  <div class="container d-flex justify-content-center">
+    <a class="navbar-brand" href="#">
+          <img src="th .jpeg" alt="Logo" class="d-inline-block align-top custom-centered-image"/>
+    </a>
+  </div>
+</nav>
+
+<h1 class="animated-text">Welcome To AgriApp</h1>
+
+<script th:inline="javascript">
+    // Fonction pour rediriger vers la page suivante après un délai
+    function redirect() {
+      window.location.href = /*[[@{/Choix.html}]]*/ '';
+    }
+    
+    // Délai avant la redirection (en millisecondes)
+    var delay = 2000; // 2 secondes
+
+    // Attente du délai puis redirection
+    setTimeout(redirect, delay);
+</script>
+  
+</body>
+</html>
+
+

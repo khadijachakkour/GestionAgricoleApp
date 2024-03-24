@@ -1,0 +1,2 @@
+Temperature:75.80%
+Humidie:27.70C

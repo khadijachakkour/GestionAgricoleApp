@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter un technicien </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+
+        .navbar {
+            background-color: #ffffff;
+            width: 100%;
+        }
+        .navbar .navbar-brand {
+            color: #1e995b;
+            font-size: 1.5rem;
+            padding: 15px;
+            transition: color 0.3s ease;
+        }
+        .navbar .navbar-brand:hover {
+            color: #ffffff;
+        }
+        .navbar .nav-link {
+            color: #1e995b;
+            font-size: 1.2rem;
+            padding: 10px 15px;
+            transition: background-color 0.3s ease;
+        }
+        .navbar .nav-link:hover {
+            background-color: #1e995b;
+            color: #ffffff;
+        }
+        .navbar .active {
+            background-color: #1e995b;
+            color: #ffffff;
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        .container h2 {
+            margin-bottom: 20px;
+            color: #1e995b;
+        }
+
+        .form-group input[type="number"],
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="password"] {
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            padding: 10px;
+            width: 100%;
+        }
+
+        .form-group input[type="number"]:focus,
+        .form-group input[type="text"]:focus,
+        .form-group input[type="email"]:focus,
+        .form-group input[type="password"]:focus {
+            outline: none;
+            border-color: #1e995b;
+            box-shadow: 0 0 5px #1e995b;
+        }
+
+        .btn-primary {
+            background-color: #1e995b;
+            border-color: #1e995b;
+            font-weight: bold;
+        }
+
+        .btn-primary:hover {
+            background-color: #17804b;
+            border-color: #17804b;
+        }
+
+        .error-message p {
+            color: #dc3545;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/Menu" onmouseover="highlightMenuItem(this)" onmouseout="removeHighlight(this)" onclick="highlightMenuItem(this)"><i class="fas fa-home"></i> Accueil</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/Profile" onmouseover="highlightMenuItem(this)" onmouseout="removeHighlight(this)" onclick="highlightMenuItem(this)"><i class="fas fa-user"></i> Profil</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/Techniciens.html" onmouseover="highlightMenuItem(this)" onmouseout="removeHighlight(this)" onclick="highlightMenuItem(this)"><i class="fas fa-users"></i> Techniciens</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/capteur" onmouseover="highlightMenuItem(this)" onmouseout="removeHighlight(this)" onclick="highlightMenuItem(this)"><i class="fas fa-microchip"></i> Capteurs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/afficher" onmouseover="highlightMenuItem(this)" onmouseout="removeHighlight(this)" onclick="highlightMenuItem(this)"><i class="fas fa-crop-alt"></i> Gerer votre Champs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/MaladieIng" onmouseover="highlightMenuItem(this)" onmouseout="removeHighlight(this)" onclick="highlightMenuItem(this)"><i class="fas fa-seedling"></i> Maladies des cultures</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/afficherRapport.html" onmouseover="highlightMenuItem(this)" onmouseout="removeHighlight(this)" onclick="highlightMenuItem(this)"><i class="fas fa-file-alt"></i> Gerer rapport</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/Home" onmouseover="highlightMenuItem(this)" onmouseout="removeHighlight(this)" onclick="highlightMenuItem(this)"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="container">
+    <div class="error-message" th:if="${errorMessage}">
+        <p th:text="${errorMessage}"></p>
+    </div>
+    <form th:action="@{/Techniciens.html}" th:object="${technicien}" method="Post">
+        
+        <div class="form-group">
+            <input type="text" name="prenom" th:field="*{prenom}" class="form-control"
+                   placeholder="Prénom" required>
+        </div>
+        <div class="form-group">
+            <input type="text" name="nom" th:field="*{nom}" class="form-control"
+                   placeholder="Nom" required>
+        </div>
+        <div class="form-group">
+            <input type="email" name="email" th:field="*{email}" class="form-control"
+                   placeholder="Email" required>
+        </div>
+        <div class="form-group">
+            <input type="password" name="password" th:field="*{password}" class="form-control"
+                   placeholder="Mot de passe" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+    </form>
+</div>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+</body>
+</html>
