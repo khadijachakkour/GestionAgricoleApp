@@ -8,10 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.slf4j.*;
 
 @Controller
-public class HomeController {	
+public class HomeController {
+		
 	
 	private Logger logger  = LoggerFactory.getLogger(HomeController.class);
 	
+
 	@GetMapping("/")
 	public String HomePage()
 	{
@@ -19,6 +21,7 @@ public class HomeController {
 		return "Home.html";
 	}
 	
+
 	@GetMapping("/Home")
 	public String Page()
 	{
